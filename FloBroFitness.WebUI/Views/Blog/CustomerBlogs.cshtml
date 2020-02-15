@@ -1,0 +1,26 @@
+﻿@model FloBroFitness.WebUI.Models.Blog
+@{
+    ViewBag.Title = "CustomerBlogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    @foreach (var blog in Model.lstBlog)
+    {
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h2><a href="/Blog/BlogDetail?id=@blog.ID">@blog.Title</a> </h2> <br />
+            <p> By @blog.Username | Date: @blog.Date</p>
+            <hr />
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+
+    }
+
+</div>

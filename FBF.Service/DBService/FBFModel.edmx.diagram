@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a0a4a85ee2f242a7809750020163e284" Name="Diagram1">
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblCategory" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblProduct" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblProductFile" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblStatu" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblUser" Width="1.5" PointX="3" PointY="5" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblProduct_tblCategory" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblProductFile_tblProduct" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblUser_tblStatu" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.Comment" Width="1.5" PointX="5.25" PointY="5.625" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.Forum" Width="1.5" PointX="8.25" PointY="5.25" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.ForumType" Width="1.5" PointX="6" PointY="9" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_Comment_Forum" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_Comment_tblUser" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_Forum_ForumType" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_Forum_tblUser" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblBlog" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="FloBroFitnessModel.tblBlogComment" Width="1.5" PointX="8.5" PointY="9.5" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblBlog_tblUser" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblBlogComment_tblBlog" />
+        <AssociationConnector Association="FloBroFitnessModel.FK_tblBlogComment_tblUser" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

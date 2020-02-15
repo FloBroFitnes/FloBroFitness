@@ -1,0 +1,55 @@
+﻿@model IEnumerable<FloBroFitness.WebUI.Models.ForumsModel>
+
+@{
+    ViewBag.Title = "forumindex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+    <div class="card">
+        <div class="card-header">
+            <h5>Category List</h5>
+            <div class="card-header-right">
+                <a href="/Category/Create" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLive">Create</a>
+            </div>
+        </div>
+    </div>
+<div class="card">
+
+    <div class="card-block">
+        <div id="divCategoryList">
+            <div class="table-responsive">
+                <table id="responsive-table" class="display table dt-responsive nowrap" style="width:100%">
+
+                    <thead>
+                        <tr>
+                            <th>Id </th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.Name</td>
+                                <td>
+                                    <a href="/@item.TypeId;" class="btn btn-info btn-xs"><i class="fa fa-cog"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+                        $('#responsive-table').DataTable({
+                        });
+    </script>
+}

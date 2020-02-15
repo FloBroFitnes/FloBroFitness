@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<div class="form-group col-sm-12">
+    <div class="col-sm-6">
+        <h3>Manage Members</h3>
+    </div>
+    <div class="col-sm-6">
+        <br />
+        <a href="/AdminMembers/AddEdit" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Member </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-group col-sm-12">
+            <div class="table-responsive">
+                <table class="display table dt-responsive nowrap" style="width:100%" id="ManageMemeber">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Is Admin</th>
+                            <th>Is Reviewer</th>
+                            <th>Is Pentester</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.FirstName @item.LastName</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    <a class="btn btn-info btn-xs" href="/Admin/AddUser/@item.ID">Edit</a>
+                                    <a class="btn btn-danger btn-xs" onclick="DeleteUser(@item.ID)" href="javascript:;">Delete</a>
+                                </td>
+                            </tr>
+                        }*@
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+</div>
+<script>
+    $('.Member').addClass('active');
+    $("#ManageMemeber").DataTable();
+
+</script>

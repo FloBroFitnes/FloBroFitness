@@ -1,0 +1,295 @@
+﻿@model FloBroFitness.WebUI.Models.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @*<link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/assets/plugins/jquery/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <title>Login</title>
+    <style>
+        .text {
+            color: #184163;
+            text-align: center;
+            font-size: 35px;
+            font-weight: bold !important;
+        }
+
+        .bodyheiht {
+            height: calc(100vh);
+            overflow: hidden;
+        }
+
+        .f-28 {
+            font-size: 35px;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .fa {
+            display: inherit !important;
+        }
+
+        .form-control {
+            border: none;
+            background-color: #dde3ec;
+            height: 43px;
+            color: #8290a3;
+            border: 1px solid #dde3ec;
+        }
+
+        .btn-Register {
+            padding: 6px 30px;
+            font-size: 18px;
+            border-radius: 20px;
+        }
+
+        .btnlogin {
+            padding: 6px 45px;
+            font-size: 20px;
+            border-radius: 20px;
+        }
+
+        .nobold {
+            font-weight: normal;
+        }
+        .facebook {
+            padding: 11px;
+            font-size: 25px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+            background: #3B5998;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid bodyheiht">
+        <div class="form-group row">
+            <div class="col-sm-8" style="align-content:center">
+                <br />
+                <br />
+                <h3 class="form-title text">Sign In</h3>
+                <br />
+                <br />
+                <div class="form-group col-lg-offset-4 col-sm-8" style="align-content:center">
+                    <div class="form-group col-sm-8" style="align-content:center">
+                        <a href="javascript:;" class="facebook" id="facebookLogin"><i class="fa fa-facebook"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:red !important" id="googleplus"><i class="fa fa-google"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#55ACEE !important"><i class="fa fa-twitter"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#125688 !important"><i class="fa fa-instagram"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#cb2027 !important"><i class="fa fa-pinterest"></i></a>
+                        @*<a href="#" class="btn btn-primary" style="border-radius:20px;width:190px"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+        <a href="#" class="btn btn-danger" style="border-radius:20px;margin-left:20px;width:190px"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>*@
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br />
+                <span class="col-lg-offset-3 col-sm-6">or use your email account</span>
+                <div class="form-group col-lg-offset-3 col-sm-6">
+                    <br />
+                    @if (TempData["Pending"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <p>Your account is pending on admin.</p>
+                        </div>
+
+                    }
+                    else if (TempData["Invalid"] != null)
+                    {
+                        <div class="alert alert-danger lblMessage" style="display:none;" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <p>Email or Password is Invalid!</p>
+                        </div>
+                    }
+                    <form action="/Account/Login" method="post">
+
+                        <div class="form-group">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    @Html.TextBoxFor(i => i.Email, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Email", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Email, null, new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
+                                    @Html.PasswordFor(i => i.Passworrd, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Passworrd, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <label>
+                                    <input type="checkbox" /> Rememeber me
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="#">Forget password</a>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group" style="text-align:end">
+                            <button type="submit" class="btn btn-primary btn-Register  text-capitalize">Sign in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-4 text-center" style="background-color:#184163;color:white;height:calc(100vh)">
+                <br />
+                <br />
+                <br />
+                <img src="~/Images/SiteLogo.png" style="text-align:center" />
+                <br />
+                <br />
+                <h3 class="text-center" style="font-size:30px">Create a FREE Account!</h3>
+                <br />
+                <p style="font-size:17px">Enter your details to get one step closer to attaining your fitness goals!</p>
+                <br />
+                <br />
+                <button type="button" class="btn btn-primary btnlogin  text-capitalize">Sign Up</button>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div id="multiAccountModel" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:350px;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form action="/Account/LoginAs" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <label class="modaltitle">Sign up as:</label>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="nobold">
+                                <input type="radio" name="Role" value="AT" checked /> Athletic
+                            </label>
+                            <br />
+                            <label class="nobold">
+                                <input type="radio" name="Role" value="AD" /> Admin
+                            </label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnContinue" type="button" class="btn btn-primary mr10">Continue</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $("#btnContinue").click(function () {
+            location.href = "/Account/Register?R=" + $("input[name='Role']:checked").val();
+        });
+        $(".btnlogin").click(function () {
+            $("#multiAccountModel").modal('show');
+        });
+        $(".datepicke").datetimepicker();
+    </script>
+
+    <script src="http://apis.google.com/js/api:client.js"></script>
+    <script>
+    var googleUser = {};
+    var startAppA = function () {
+        gapi.load('auth2', function () {
+            //Retrieve the singleton for the GoogleAuth library and set up the client.
+            //fazeel
+            //auth2 = gapi.auth2.init({
+            //    client_id: '385941713053-o391hv3ki95a2ehfhmabdio9dp8npm9u.apps.googleusercontent.com',
+            //    secret_key: 'tEMT6MQAc6mFal02kLt0Qwbm',
+            //    cookiepolicy: 'single_host_origin',
+            //});
+            // Azid azy332
+            //auth2 = gapi.auth2.init({
+            //    client_id: '85147360680-mbj4se925gv9stvl879ukuh84mge7f2j.apps.googleusercontent.com',
+            //    secret_key: '1Xmp4au577j0PixnaafrG5uw',
+            //    cookiepolicy: 'single_host_origin',
+            //});
+            auth2 = gapi.auth2.init({
+                client_id: '11327574479-suirqo6fd4ob5t0l29ls2i3glmunmssn.apps.googleusercontent.com',
+                secret_key: 'gWgp3lAQpqWRPBnZB0v80u0s',
+                cookiepolicy: 'single_host_origin',
+            });
+            //  debugger;
+            attachSignin(document.getElementById('googleplus'));
+
+        });
+    };
+
+    function attachSignin(element) {
+         debugger;
+        auth2.attachClickHandler(element, {}, function (googleUser) {
+            debugger;
+            var profiles = googleUser.getBasicProfile();
+            //Crate A Bunch Of Object for Search
+            var objData = {
+                Email: profiles.getEmail()
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Login", "Account")',
+                data: objData,
+                datatype: "json",
+                success: function (data) {
+                    location.reload(true);
+                    }
+            });
+        }, function (error) {
+            debugger;
+            //alert(JSON.stringify);
+        });
+    }
+
+    $("#facebookLogin").click(function () {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Facebook","Account")',
+                data: '',
+                datatype: "json",
+                success: function (data) {
+                    location.href = data;
+                }
+            });
+    });
+
+    </script>
+    <script type="text/javascript">
+        startAppA();
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿@model FloBroFitness.WebUI.Models.Blog
+@{
+    ViewBag.Title = "BlogDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-1"> </div>
+        <div class="col-sm-10">
+            <input type="hidden" value="@Model.ID" class="hdfBlogID" />
+            <h2><a href="">@Model.Title</a> </h2> <br />
+            <p> By @Model.Username | Date: @Model.Date</p>
+            <hr />
+            <div>
+                @Html.Raw(Model.Content)
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            Leave a Comment <br />
+            @if (ViewBag.IsCustomerLogin)
+            {
+                <textarea placeholder="Comment" rows="8" class="txtComment" style="width:100%;"></textarea>
+                <button type="button" value="Post Comment" class="btn btn-primary btnPostComment" onclick="PostComment();">Post Comment</button>
+            }
+            else
+            {
+                <textarea placeholder="To post comment, you have to login first." rows="8" style="width:100%;" disabled></textarea>
+                <button type="button" value="Post Comment" class="btn btn-primary btnPostComment" disabled>Post Comment</button>
+            }
+            <hr />
+            <div class="dvComment">@{ Html.RenderPartial("_BlogComments", Model);}</div>
+            
+        </div>
+        <div class="col-sm-1"> </div>
+    </div>
+</div>
+
+<script>
+    function PostComment() {
+        debugger
+        $.ajax({
+            url: '/Blog/AddComment?blogID=' + $(".hdfBlogID").val() + "&comment=" + $(".txtComment").val(),
+            success: function (result) {
+                $(".dvComment").html(result);
+            }
+
+        })
+    }
+  
+</script>

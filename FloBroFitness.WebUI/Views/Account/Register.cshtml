@@ -1,0 +1,319 @@
+﻿
+@model FloBroFitness.WebUI.Models.RegisterationModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    @*<link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/assets/plugins/jquery/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <title>Login</title>
+    <style>
+        .text {
+            color: #184163;
+            text-align: center;
+            font-size: 35px;
+            font-weight: bold !important;
+        }
+
+        .bodyheiht {
+            height: calc(100vh);
+            overflow: hidden;
+        }
+
+        .f-28 {
+            font-size: 35px;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .fa {
+            display: inherit !important;
+        }
+
+        .form-control {
+            border: none;
+            background-color: #dde3ec;
+            height: 43px;
+            color: #8290a3;
+            border: 1px solid #dde3ec;
+        }
+
+        .btn-Register {
+            padding: 6px 30px;
+            font-size: 18px;
+            border-radius: 20px;
+        }
+
+        .btnlogin {
+            padding: 6px 45px;
+            font-size: 20px;
+            border-radius: 20px;
+        }
+
+        .facebook {
+            padding: 11px;
+            font-size: 25px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+            background: #3B5998;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid bodyheiht">
+        <div class="form-group row">
+            <div class="col-sm-4 text-center" style="background-color:#184163;color:white;height:calc(100vh)">
+                <br />
+                <br />
+                <br />
+                <img src="~/Images/SiteLogo.png" style="text-align:center;height:100px;" />
+                <br />
+                <br />
+                <h3 class="text-center" style="font-size:30px">Login to your account</h3>
+                <br />
+                <p style="font-size:17px">We're looking forward to offering our continued assistance, guidance and encouragment on your fitness journey!</p>
+                <br />
+                <br />
+                <a href="/Account/Login" class="btn btn-primary btnlogin  text-capitalize">Sign In</a>
+
+            </div>
+            <div class="col-sm-8" style="align-content:center">
+                <br />
+                <br />
+                <h3 class="form-title text">Create Account</h3>
+                <br />
+                <br />
+                @if (Request.QueryString["R"] != null && Request.QueryString["R"] == "AT")
+                {
+                    <div class=" form-group col-sm-4">
+
+                    </div>
+                    <div class="form-group col-sm-8" style="align-content:center">
+                        <a href="javascript:;" class="facebook" id="facebookLogin"><i class="fa fa-facebook"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:red !important" id="googleplus"><i class="fa fa-google"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#55ACEE !important"><i class="fa fa-twitter"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#125688 !important"><i class="fa fa-instagram"></i></a>
+                        <a href="javascript:;" class="facebook" style="background:#cb2027 !important"><i class="fa fa-pinterest"></i></a>
+                        @*<a href="#" class="btn btn-primary" style="border-radius:20px;width:190px"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+        <a href="#" class="btn btn-danger" style="border-radius:20px;margin-left:20px;width:190px"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>*@
+                        <div class="clearfix"></div>
+                        <br />
+                        <br />
+                        <span>or register manually</span>
+                    </div>
+
+                }
+
+                <div class="form-group col-lg-offset-1 col-sm-10">
+                    <br />
+                    <form action="/Account/Register" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="StatusID" value="1" />
+                        @Html.HiddenFor(i => i.IsAdmin)
+                        @Html.HiddenFor(i => i.IsAthlete)
+                        <div class="form-group col-sm-6">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBoxFor(i => i.FirstName, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "First Name", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBoxFor(i => i.LastName, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Last Name", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBoxFor(i => i.UserID, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "User ID", @readOnly = "readOnly", @autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    @Html.TextBoxFor(i => i.Email, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Email", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Email, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eye-slash"></i></span>
+                                    @Html.PasswordFor(i => i.Passworrd, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password", @autocomplete = "off" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Passworrd, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (Request.QueryString["R"] != null && Request.QueryString["R"] != "AT")
+                        {
+                            <div class="form-group col-sm-6">
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-file"></i></span>
+                                        <input class="form-control form-control-solid placeholder-no-fix" name="CV" type="file" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+                        <br />
+                        <div class="form-group" style="text-align:end">
+                            <button class="btn btn-primary btn-Register  text-capitalize">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <script>
+        //$(".datepicke").datetimepicker();
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+      var number =  getRndInteger(100, 999);
+        $("#FirstName").change(function () {
+            var first = "";
+            var last = "";
+            if ($(this).val() != "") {
+                first = $(this).val().toLowerCase().substring(0, 1);
+            }
+            if ($("#LastName").val() != "") {
+                last = $("#LastName").val().toLowerCase().substring(0, 3);
+            }
+            $("#UserID").val(first + "" + last + "" + number);
+        });
+        $("#LastName").change(function () {
+            var first = "";
+            var last = "";
+            if ($(this).val() != "") {
+                last = $(this).val().toLowerCase().substring(0, 3);
+            }
+            if ($("#FirstName").val() != "") {
+                first = $("#FirstName").val().toLowerCase().substring(0, 1);
+            }
+            $("#UserID").val(first + "" + last + "" + number);
+        });
+    </script>
+    @if (Request.QueryString["R"] != null && Request.QueryString["R"] != "AT")
+    {
+        <script>
+            $("#IsAdmin").val("true");
+            $("#IsAthlete").val("false");
+        </script>
+    }
+    else
+    {
+        <script>
+            $("#IsAdmin").val("false");
+            $("#IsAthlete").val("true");
+        </script>
+    }
+    <script src="http://apis.google.com/js/api:client.js"></script>
+    <script>
+    var googleUser = {};
+    var startAppA = function () {
+        gapi.load('auth2', function () {
+            //Retrieve the singleton for the GoogleAuth library and set up the client.
+            //fazeel
+            //auth2 = gapi.auth2.init({
+            //    client_id: '385941713053-o391hv3ki95a2ehfhmabdio9dp8npm9u.apps.googleusercontent.com',
+            //    secret_key: 'tEMT6MQAc6mFal02kLt0Qwbm',
+            //    cookiepolicy: 'single_host_origin',
+            //});
+            // Azid azy332
+            //auth2 = gapi.auth2.init({
+            //    client_id: '85147360680-mbj4se925gv9stvl879ukuh84mge7f2j.apps.googleusercontent.com',
+            //    secret_key: '1Xmp4au577j0PixnaafrG5uw',
+            //    cookiepolicy: 'single_host_origin',
+            //});
+            auth2 = gapi.auth2.init({
+                client_id: '11327574479-suirqo6fd4ob5t0l29ls2i3glmunmssn.apps.googleusercontent.com',
+                secret_key: 'gWgp3lAQpqWRPBnZB0v80u0s',
+                cookiepolicy: 'single_host_origin',
+            });
+            //  debugger;
+            attachSignin(document.getElementById('googleplus'));
+
+        });
+    };
+
+    function attachSignin(element) {
+         debugger;
+        auth2.attachClickHandler(element, {}, function (googleUser) {
+            debugger;
+            var profiles = googleUser.getBasicProfile();
+            //Crate A Bunch Of Object for Search
+            var objData = {
+                Email: profiles.getEmail(),
+                LastName: profiles.getFamilyName(),
+                FirstName: profiles.getGivenName(),
+                UserID: profiles.getId(),
+                IsAdmin: 'false',
+                IsAthlete: 'true',
+                StatusID: '1',
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Register", "Account")',
+                data: objData,
+                datatype: "json",
+                success: function (data) {
+                    location.href = "/Account/Login";
+                    }
+            });
+        }, function (error) {
+            debugger;
+            //alert(JSON.stringify);
+        });
+    }
+
+    $("#facebookLogin").click(function () {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Facebook","Account")',
+                data: '',
+                datatype: "json",
+                success: function (data) {
+                    location.href = data;
+                }
+            });
+    });
+
+    </script>
+    <script type="text/javascript">
+    startAppA();
+    </script>
+</body>
+</html>

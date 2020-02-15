@@ -1,0 +1,68 @@
+﻿@model IEnumerable<FloBroFitness.WebUI.Models.ForumTypeModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5>Forum Type List</h5>
+        <div class="card-header-right">
+            <a href="/ForumType/Create" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLive">Create</a>
+        </div>
+    </div>
+</div>
+<div class="card">
+
+    <div class="card-block">
+        <div id="divCategoryList">
+            @Html.Partial("_TypeList", Model);
+        </div>
+    </div>
+</div>
+
+<div id="exampleModalLive" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLiveLabel">Add Forum Type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hdfId" value="0" />
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <label>Name</label>
+                        <input type="text" id="txtName" class="form-control" />
+                        <span class="text-danger" id="rqName"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnAddCategory" class="btn btn-primary">Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+    $("#btnAddCategory").click(function () {
+            if ($("#txtName").val() == "") {
+                $("#rqName").text("Required");
+                return false;
+            }
+            $("#rqName").text("");
+            $.post("/ForumType/Create", { ID: $("#hdfId").val(), Name: $("#txtName").val() }, function (res) {
+                $("#divCategoryList").html(res);
+                $("#hdfId").val("0");
+                $("#txtName").val("");
+                $("#exampleModalLive").modal("hide");
+            });
+        });
+        $('#responsive-table').DataTable({
+        });</script>
+}

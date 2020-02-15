@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FBF.Service.DBService.Forum>
+
+@{
+    ViewBag.Title = "forumindex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="card">
+
+    <div class="card-block">
+        <div id="divCategoryList">
+            <div class="table-responsive">
+                <table id="responsive-table" class="display table dt-responsive nowrap" style="width:100%">
+
+                    <thead>
+                        <tr>
+                            <th>Topic </th>
+                            <th>Type</th>
+                            <th>Created On</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.Name</td>
+                                <td>@item.Name</td>
+                                <td>@item.CreatedOn</td>
+                                <td>
+                                    <a href="/Forum/Forumdetail/@item.ForumId" class="btn btn-info btn-xs"><i class="fa fa-cog"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        $('#responsive-table').DataTable({
+        });
+    </script>
+}

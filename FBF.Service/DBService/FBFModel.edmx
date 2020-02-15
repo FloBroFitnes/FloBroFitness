@@ -1,0 +1,758 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FloBroFitnessModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ForumId" Type="bigint" />
+          <Property Name="Createon" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="ForumId" />
+          </Key>
+          <Property Name="ForumId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="TypeId" Type="bigint" />
+          <Property Name="Activity" Type="nvarchar(max)" />
+          <Property Name="UserView" Type="int" />
+          <Property Name="UserId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ForumType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblBlog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Discription" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Tags" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tblBlogComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" />
+          <Property Name="CustomerID" Type="bigint" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Size" Type="nchar" MaxLength="1" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CategoryId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="tblProductFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Type" Type="nchar" MaxLength="10" />
+          <Property Name="ProductId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="tblStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="TwoCharStatus" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Passworrd" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="IsAthlete" Type="bit" />
+          <Property Name="DocumentFile" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="StatusID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Comment_Forum">
+          <End Role="Forum" Type="Self.Forum" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="ForumId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forum_ForumType">
+          <End Role="ForumType" Type="Self.ForumType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Forum" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forum_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Forum" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlog_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblBlog" Type="Self.tblBlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlogComment_tblBlog">
+          <End Role="tblBlog" Type="Self.tblBlog" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblBlogComment" Type="Self.tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlogComment_tblUser">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblBlogComment" Type="Self.tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProductFile_tblProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblProductFile" Type="Self.tblProductFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblProductFile">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUser_tblStatu">
+          <End Role="tblStatu" Type="Self.tblStatu" Multiplicity="0..1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FloBroFitnessModelStoreContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Forum" EntityType="Self.Forum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumType" EntityType="Self.ForumType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBlog" EntityType="Self.tblBlog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBlogComment" EntityType="Self.tblBlogComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProductFile" EntityType="Self.tblProductFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatu" EntityType="Self.tblStatu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Forum" Association="Self.FK_Comment_Forum">
+            <End Role="Forum" EntitySet="Forum" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_tblUser" Association="Self.FK_Comment_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forum_ForumType" Association="Self.FK_Forum_ForumType">
+            <End Role="ForumType" EntitySet="ForumType" />
+            <End Role="Forum" EntitySet="Forum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forum_tblUser" Association="Self.FK_Forum_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="Forum" EntitySet="Forum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlog_tblUser" Association="Self.FK_tblBlog_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblBlog" EntitySet="tblBlog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlogComment_tblBlog" Association="Self.FK_tblBlogComment_tblBlog">
+            <End Role="tblBlog" EntitySet="tblBlog" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlogComment_tblUser" Association="Self.FK_tblBlogComment_tblUser">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="Self.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblProduct" EntitySet="tblProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProductFile_tblProduct" Association="Self.FK_tblProductFile_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblProductFile" EntitySet="tblProductFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUser_tblStatu" Association="Self.FK_tblUser_tblStatu">
+            <End Role="tblStatu" EntitySet="tblStatu" />
+            <End Role="tblUser" EntitySet="tblUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FloBroFitnessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FloBroFitnessEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCategories" EntityType="FloBroFitnessModel.tblCategory" />
+          <EntitySet Name="tblProducts" EntityType="FloBroFitnessModel.tblProduct" />
+          <EntitySet Name="tblProductFiles" EntityType="FloBroFitnessModel.tblProductFile" />
+          <EntitySet Name="tblStatus" EntityType="FloBroFitnessModel.tblStatu" />
+          <EntitySet Name="tblUsers" EntityType="FloBroFitnessModel.tblUser" />
+          <AssociationSet Name="FK_tblProduct_tblCategory" Association="FloBroFitnessModel.FK_tblProduct_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblProduct" EntitySet="tblProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProductFile_tblProduct" Association="FloBroFitnessModel.FK_tblProductFile_tblProduct">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblProductFile" EntitySet="tblProductFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUser_tblStatu" Association="FloBroFitnessModel.FK_tblUser_tblStatu">
+            <End Role="tblStatu" EntitySet="tblStatus" />
+            <End Role="tblUser" EntitySet="tblUsers" />
+          </AssociationSet>
+          <EntitySet Name="Comments" EntityType="FloBroFitnessModel.Comment" />
+          <EntitySet Name="Fora" EntityType="FloBroFitnessModel.Forum" />
+          <EntitySet Name="ForumTypes" EntityType="FloBroFitnessModel.ForumType" />
+          <AssociationSet Name="FK_Comment_Forum" Association="FloBroFitnessModel.FK_Comment_Forum">
+            <End Role="Forum" EntitySet="Fora" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_tblUser" Association="FloBroFitnessModel.FK_Comment_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forum_ForumType" Association="FloBroFitnessModel.FK_Forum_ForumType">
+            <End Role="ForumType" EntitySet="ForumTypes" />
+            <End Role="Forum" EntitySet="Fora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forum_tblUser" Association="FloBroFitnessModel.FK_Forum_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="Forum" EntitySet="Fora" />
+          </AssociationSet>
+          <EntitySet Name="tblBlogs" EntityType="FloBroFitnessModel.tblBlog" />
+          <EntitySet Name="tblBlogComments" EntityType="FloBroFitnessModel.tblBlogComment" />
+          <AssociationSet Name="FK_tblBlog_tblUser" Association="FloBroFitnessModel.FK_tblBlog_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblBlog" EntitySet="tblBlogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlogComment_tblBlog" Association="FloBroFitnessModel.FK_tblBlogComment_tblBlog">
+            <End Role="tblBlog" EntitySet="tblBlogs" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBlogComment_tblUser" Association="FloBroFitnessModel.FK_tblBlogComment_tblUser">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblBlogComment" EntitySet="tblBlogComments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProducts" Relationship="FloBroFitnessModel.FK_tblProduct_tblCategory" FromRole="tblCategory" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int64" />
+          <NavigationProperty Name="tblCategory" Relationship="FloBroFitnessModel.FK_tblProduct_tblCategory" FromRole="tblProduct" ToRole="tblCategory" />
+          <NavigationProperty Name="tblProductFiles" Relationship="FloBroFitnessModel.FK_tblProductFile_tblProduct" FromRole="tblProduct" ToRole="tblProductFile" />
+        </EntityType>
+        <EntityType Name="tblProductFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProductId" Type="Int64" />
+          <NavigationProperty Name="tblProduct" Relationship="FloBroFitnessModel.FK_tblProductFile_tblProduct" FromRole="tblProductFile" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TwoCharStatus" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblUsers" Relationship="FloBroFitnessModel.FK_tblUser_tblStatu" FromRole="tblStatu" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Passworrd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="IsAthlete" Type="Boolean" />
+          <Property Name="DocumentFile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusID" Type="Int32" />
+          <NavigationProperty Name="tblStatu" Relationship="FloBroFitnessModel.FK_tblUser_tblStatu" FromRole="tblUser" ToRole="tblStatu" />
+          <NavigationProperty Name="Comments" Relationship="FloBroFitnessModel.FK_Comment_tblUser" FromRole="tblUser" ToRole="Comment" />
+          <NavigationProperty Name="Fora" Relationship="FloBroFitnessModel.FK_Forum_tblUser" FromRole="tblUser" ToRole="Forum" />
+          <NavigationProperty Name="tblBlogs" Relationship="FloBroFitnessModel.FK_tblBlog_tblUser" FromRole="tblUser" ToRole="tblBlog" />
+          <NavigationProperty Name="tblBlogComments" Relationship="FloBroFitnessModel.FK_tblBlogComment_tblUser" FromRole="tblUser" ToRole="tblBlogComment" />
+        </EntityType>
+        <Association Name="FK_tblProduct_tblCategory">
+          <End Type="FloBroFitnessModel.tblCategory" Role="tblCategory" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.tblProduct" Role="tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProductFile_tblProduct">
+          <End Type="FloBroFitnessModel.tblProduct" Role="tblProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.tblProductFile" Role="tblProductFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblProductFile">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUser_tblStatu">
+          <End Type="FloBroFitnessModel.tblStatu" Role="tblStatu" Multiplicity="0..1" />
+          <End Type="FloBroFitnessModel.tblUser" Role="tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ForumId" Type="Int64" />
+          <Property Name="Createon" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserId" Type="Int64" />
+          <NavigationProperty Name="Forum" Relationship="FloBroFitnessModel.FK_Comment_Forum" FromRole="Comment" ToRole="Forum" />
+          <NavigationProperty Name="tblUser" Relationship="FloBroFitnessModel.FK_Comment_tblUser" FromRole="Comment" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="ForumId" />
+          </Key>
+          <Property Name="ForumId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int64" />
+          <Property Name="Activity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserView" Type="Int32" />
+          <Property Name="UserId" Type="Int64" />
+          <NavigationProperty Name="Comments" Relationship="FloBroFitnessModel.FK_Comment_Forum" FromRole="Forum" ToRole="Comment" />
+          <NavigationProperty Name="ForumType" Relationship="FloBroFitnessModel.FK_Forum_ForumType" FromRole="Forum" ToRole="ForumType" />
+          <NavigationProperty Name="tblUser" Relationship="FloBroFitnessModel.FK_Forum_tblUser" FromRole="Forum" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="ForumType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Fora" Relationship="FloBroFitnessModel.FK_Forum_ForumType" FromRole="ForumType" ToRole="Forum" />
+        </EntityType>
+        <Association Name="FK_Comment_Forum">
+          <End Type="FloBroFitnessModel.Forum" Role="Forum" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="ForumId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_tblUser">
+          <End Type="FloBroFitnessModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="FloBroFitnessModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forum_ForumType">
+          <End Type="FloBroFitnessModel.ForumType" Role="ForumType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.Forum" Role="Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forum_tblUser">
+          <End Type="FloBroFitnessModel.tblUser" Role="tblUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.Forum" Role="Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblBlog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Tags" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblUser" Relationship="FloBroFitnessModel.FK_tblBlog_tblUser" FromRole="tblBlog" ToRole="tblUser" />
+          <NavigationProperty Name="tblBlogComments" Relationship="FloBroFitnessModel.FK_tblBlogComment_tblBlog" FromRole="tblBlog" ToRole="tblBlogComment" />
+        </EntityType>
+        <EntityType Name="tblBlogComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogID" Type="Int64" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblBlog" Relationship="FloBroFitnessModel.FK_tblBlogComment_tblBlog" FromRole="tblBlogComment" ToRole="tblBlog" />
+          <NavigationProperty Name="tblUser" Relationship="FloBroFitnessModel.FK_tblBlogComment_tblUser" FromRole="tblBlogComment" ToRole="tblUser" />
+        </EntityType>
+        <Association Name="FK_tblBlog_tblUser">
+          <End Type="FloBroFitnessModel.tblUser" Role="tblUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.tblBlog" Role="tblBlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlogComment_tblBlog">
+          <End Type="FloBroFitnessModel.tblBlog" Role="tblBlog" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FloBroFitnessModel.tblBlogComment" Role="tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBlog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBlogComment_tblUser">
+          <End Type="FloBroFitnessModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="FloBroFitnessModel.tblBlogComment" Role="tblBlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblBlogComment">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FloBroFitnessModelStoreContainer" CdmEntityContainer="FloBroFitnessEntities">
+          <EntitySetMapping Name="tblCategories">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblProduct">
+              <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProductFiles">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblProductFile">
+              <MappingFragment StoreEntitySet="tblProductFile">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatus">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblStatu">
+              <MappingFragment StoreEntitySet="tblStatu">
+                <ScalarProperty Name="TwoCharStatus" ColumnName="TwoCharStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DocumentFile" ColumnName="DocumentFile" />
+                <ScalarProperty Name="IsAthlete" ColumnName="IsAthlete" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Passworrd" ColumnName="Passworrd" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Createon" ColumnName="Createon" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fora">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.Forum">
+              <MappingFragment StoreEntitySet="Forum">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserView" ColumnName="UserView" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumTypes">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.ForumType">
+              <MappingFragment StoreEntitySet="ForumType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBlogs">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblBlog">
+              <MappingFragment StoreEntitySet="tblBlog">
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBlogComments">
+            <EntityTypeMapping TypeName="FloBroFitnessModel.tblBlogComment">
+              <MappingFragment StoreEntitySet="tblBlogComment">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

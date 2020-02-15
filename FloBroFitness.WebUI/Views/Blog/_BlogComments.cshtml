@@ -1,0 +1,13 @@
+﻿@model FloBroFitness.WebUI.Models.Blog
+    @if(Model.lstComments!=null && Model.lstComments.Count > 0)
+    {
+        foreach (var comment in Model.lstComments)
+        {
+        <div class="row">
+           <h3><b> @comment.CustomerName</b></h3> 
+            On @comment.Date <br /><br />
+            <p style="font-size:16px">@comment.Comment</p>
+            <hr />
+        </div>
+        }
+    }

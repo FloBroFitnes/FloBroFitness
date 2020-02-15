@@ -1,0 +1,112 @@
+﻿@model IEnumerable<FBF.Service.DBService.Forum>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@foreach (var item in Model)
+    {
+        item.IsActive.ToString()
+    }*@
+
+<div class="form-group mt-5 text-right">
+    <div class="col-md-12">
+        <a href="/forum/create" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New Topic</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+<div class="form-group" style="margin-top:5px">
+    <div class="col-md-12">
+
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between ">
+                <div class="row font-weight-bold" style="font-size:15px; font-weight:600">
+                    <div class="col-md-1 text-left mt-25">
+                    </div>
+                    <div class="col-md-4 text-left ">
+                        <p>Topic</p>
+                    </div>
+
+                    <div class="col-md-1 text-left">
+
+                    </div>
+                    <div class="col-md-1 text-left ">
+                        <p>Category</p>
+                    </div>
+                    <div class="col-md-1 text-left ">
+                        <p>View</p>
+                    </div>
+                    <div class="col-md-2 text-left ">
+                        <p>Activity</p>
+                    </div>
+                    <div class="col-md-2 text-right">
+                    </div>
+                </div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between ">
+                    <div class="row">
+                        <div class="col-md-2 text-right">
+                            <img class="img-fluid img-thumbnail" style="height:100px" src="~/Images/DefaultAvatar.png">
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <h3>@item.Name</h3>
+                            <p class="mt-25">Craeted on : <span class="text-primary">@item.CreatedOn</span> </p>
+                        </div>
+                        <div class="col-md-1 text-left mt-25">
+
+                        </div>
+                        <div class="col-md-1 text-left mt-25">
+
+                            @item.ForumType.Name
+                        </div>
+                        <div class="col-md-1 text-left mt-25">
+                            <p>@item.UserView</p>
+                        </div>
+                        <div class="col-md-2 text-left mt-25">
+                            <p>@(item.Activity)</p>
+                        </div>
+                        <div class="col-md-2 text-right">  <div class="d-inline"><a class="btn btn-sm btn-info" href="/forum/detail/@item.ForumId">READ MORE</a></div></div>
+                    </div>
+                </li>
+
+                @*<div class="row">
+                        <div class="col-md-12">1</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">1</div>
+                        <div class="col-md-6"><button class="btn brn-sm btn-info">READ MORE</button></div>
+                    </div>*@
+            }
+        </ul>
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+
+<style>
+    .ck-content {
+        height: 130px;
+    }
+</style>
+@section scripts{
+    <script>
+        $(window).load(function () {
+
+            $("html, body").animate({ scrollTop: 400 - 10 });
+            ClassicEditor.create(document.querySelector('#classic-editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+            $("#classic-editor").height('400px');
+        //$("#liForm").addClass("active");
+        });
+    </script>
+}
+
+
+

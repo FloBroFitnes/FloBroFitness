@@ -1,0 +1,70 @@
+﻿@model FloBroFitness.WebUI.Models.AdminMemberModel
+@{
+    ViewBag.Title = "AddEdit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="form-group col-sm-12">
+    <div class="col-sm-6">
+        @if (Model.ID > 0)
+        {
+            <h3>Edit Member</h3>
+        }
+        else
+        {
+            <h3>Add Member</h3>
+        }
+    </div>
+    <div class="col-sm-6">
+        <br />
+        <a href="/AdminMembers" class="btn btn-primary pull-right">Member List</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <form action="/Admin/AddEditIssue" method="post">
+            @Html.HiddenFor(i => i.ID)
+            <div class="col-sm-7">
+                <div class="form-group col-sm-6">
+                    <label class="control-label">First Name</label>
+                    @Html.TextBoxFor(i => i.FirstName, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Last Name</label>
+                    @Html.TextBoxFor(i => i.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Email</label>
+                    @Html.TextBoxFor(i => i.Email, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Password</label>
+                    @Html.PasswordFor(i => i.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-sm-12">
+                @if (Model.ID > 0)
+                {
+                    <button  class="btn btn-primary pull-right"> Update</button>
+                }
+                else
+                {
+                    <button  class="btn btn-primary pull-right"> Add</button>
+                }
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+<script>
+    $('.Member').addClass('active');
+
+</script>

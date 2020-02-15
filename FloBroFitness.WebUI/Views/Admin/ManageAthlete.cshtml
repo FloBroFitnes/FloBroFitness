@@ -1,0 +1,71 @@
+﻿@model List<FBF.Service.DBService.tblUser>
+@{
+    ViewBag.Title = "Manage Athlete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Manage Athlete</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="main-body">
+    <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table id="responsive-table" class="display table dt-responsive nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>User ID</th>
+                                        <th>Email</th>
+                                        <th>Register Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>@item.FirstName</td>
+                                        <td>@item.LastName</td>
+                                        <td>@item.UserID</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-info btn-xs">Delete</a>
+                                        </td>
+                                    </tr>
+                                        }
+                                    }   
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+
+<script>
+    $('#responsive-table').DataTable({
+    });
+</script>
+

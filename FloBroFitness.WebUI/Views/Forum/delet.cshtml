@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FBF.Service.DBService.Forum>
+
+@{
+    ViewBag.Title = "delet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>delet</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Body)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ForumType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblUser.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Body)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Activity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserView)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ForumType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblUser.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ForumId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ForumId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ForumId })
+        </td>
+    </tr>
+}
+
+</table>

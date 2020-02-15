@@ -1,0 +1,122 @@
+﻿@model FloBroFitness.WebUI.Models.ProductModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/assets/css/pages/fileupload.css">
+
+<style>
+
+    .ck-editor__editable {
+        height: 200px;
+    }
+</style>
+<form action="/Product/Create" method="post" enctype="multipart/form-data">
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Create Product</h5>
+            <div class="card-header-right">
+                <a href="/Product/Index" class="btn btn-primary">View List</a>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+
+        <div class="card-block">
+            <div class="form-group">
+                <div class="row col-sm-12">
+                    <div class="form-group col-sm-3">
+                        <label>Category</label>
+                        @Html.DropDownListFor(i => i.CategoryID, new SelectList(ViewBag.Category, "ID", "Name"), "Please select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(i => i.CategoryID, null, new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Name</label>
+                        @Html.TextBoxFor(i => i.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(i => i.Name, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Size</label>
+                        @Html.DropDownListFor(i => i.Size, new List<SelectListItem>
+             { new SelectListItem() { Text = "Please Select", Value = "", Selected=true },
+             new SelectListItem() { Text = "Larg", Value = "L" } ,
+             new SelectListItem() { Text = "Medium", Value = "M" } ,
+             new SelectListItem() { Text = "Small", Value = "S" } ,
+             },
+             new { @class = "form-control " })
+                        @Html.ValidationMessageFor(i => i.Size, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Price</label>
+                        @Html.TextBoxFor(i => i.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(i => i.Price, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-12 mb-4">
+                    <label>Description</label>
+                    @Html.TextAreaFor(i => i.Description, new { @class = "form-control", @id = "classic-editor" })
+                    @*@Html.ValidationMessageFor(i => i.Price, null, new { @class = "text-danger" })*@
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12">
+
+                        <div class="col-md-6">
+                            <label>Upload Images</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Images</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="form-control" name="images" multiple id="inputGroupFile01">
+                                    @*<label class="custom-file-label" for="inputGroupFile01">Choose file</label>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Upload Videos</label>
+                            @*<form action="~/assets/plugins/fileupload/js/file-upload.php" class="dropzone">
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple />
+                                    </div>
+                                </form>*@
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Videos</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="form-control" name="Videos" multiple id="flVideo">
+                                    @*<label class="custom-file-label" for="flVideo">Choose file</label>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-footer">
+            <h5></h5>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-info">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            // classic editor
+            ClassicEditor.create(document.querySelector('#classic-editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+    }

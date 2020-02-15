@@ -1,0 +1,166 @@
+﻿@model FloBroFitness.WebUI.Models.ForumsModel
+
+@{
+    ViewBag.Title = "detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="form-group mt-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h1>@Model.Name</h1>
+            <p>
+                @Html.Raw(Model.Body)
+            </p>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <textarea id="coomentBody" rows="4" class="form-control" placeholder="Comments"></textarea>
+                    <button type="button" id="btnSubmit" class="btn btn-primary pull-right btn-md" style="margin-top:10px">Submit </button>
+                </div>
+
+            </div>
+            <div class="row mt-5">
+
+                <div class="col-md-12">
+                    <ul class="list-group" id="commentSection">
+                        @*<li class="list-group-item d-flex justify-content-between ">
+                            <div class="row font-weight-bold">
+                                <div class="col-md-2 text-right">
+                                    <img class="img-fluid img-thumbnail" style="height:100px" src="~/Images/DefaultAvatar.png">
+                                </div>
+                                <div class="col-md-8 text-left">
+                                    <h3 style="font-size:16px; font-weight:600">Faizn hamzs</h3>
+                                    <p style="font-size:14px; font-weight:300"> aksudhhask maiskdhas kjasdhkash kasjdhkash kasdhakshd </p>
+                                    <p style="font-size:15px; font-weight:500"> <span class="text-primary">@DateTime.Now</span> </p>
+
+                                </div>
+                                <div class="col-md-2 text-left" style="margin-top:30px" >
+                                    <button class="btn btn-danger"><i class="fa fa-trash" onclick="commentdelete(this,8)"></i></button>
+                                </div>
+
+                            </div>
+                        </li>*@
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+
+        <div class="clearfix"></div>
+    </div>
+<div class="clearfix"></div>
+<p style="display:block" id="sessionid">@ViewBag.sessionId</p>
+@section scripts{
+    <script>
+        var countComments;
+        $(window).load(function () {
+
+            $("html, body").animate({ scrollTop: 400 - 10 });
+
+        });
+        $(document).ready(function () {
+            getComments();
+        })
+        $("#btnSubmit").click(function () {
+
+            var commentVal = $("#coomentBody").val();
+            var dateTime = Date.now();
+            var comment = {
+                Name: commentVal,
+                ForumId:@ViewBag.id,
+            }
+             var data = { "comment": comment};
+            $.ajax({
+                    type: "POST",
+                    url: "/Forum/CommentAdd",
+                    contentType: "application/json",
+                    dataType: 'json',
+                    data: JSON.stringify(data),
+                success: function (response) {
+                    if (response != null) {
+                        var newLi = $('<li class="list-group-item d-flex justify-content-between " id="my' + countComments + '"> <div class="row font-weight-bold"> <div class="col-md-2 text-right"> <img class="img-fluid img-thumbnail" style="height:100px" src="/Images/DefaultAvatar.png"> </div> <div class="col-md-8 text-left"> <h3 style="font-size:16px; font-weight:600"> UserName</h3> <p style="font-size:14px; font-weight:300"> ' + commentVal + '</p> <p style="font-size:15px; font-weight:500"> <span class="text-primary">    ' + ConvertJsonDateString(JSON.stringify(dateTime)) + '</span> </p> </div> <div class="col-md-2 text-left" style="margin-top:30px" >    <button class="btn btn-danger" ><i class="fa fa-trash" onclick="commentdelete(' + countComments + ',' + response + ')"></i></button> </div> </div> </li>');
+
+                        $('#commentSection').prepend(newLi);
+                          countComments = countComments + 1;
+                          $("#coomentBody").val('');
+                      } else {
+                          alert("fount some erro");
+                      }
+                    }
+                    })
+
+        })
+
+        function commentdelete(rowId,id) {
+             $.ajax({
+                    type: "Get",
+                    url: "/Forum/deleteComments/" + id,
+                    contentType: "json",
+                 success: function (response) {
+                     if (response == "true") {
+                         $("#my" + rowId).remove();
+                     } else {
+                         alert("font some error.")
+                     }
+
+                    }
+                    })
+
+
+        }
+
+        function getComments() {
+            var userId = $("#sessionid").text();
+
+            $.ajax({
+                    type: "Get",
+                    url: "/Forum/GetComments/" + @ViewBag.id,
+                    contentType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        countComments = (response.length);
+                        console.log(JSON.stringify(response));
+                        $.each(response, function (i, value) {
+
+                            if (userId == value.UserId) {
+                                var newLi = $('<li class="list-group-item d-flex justify-content-between " id="my' + i + '"> <div class="row font-weight-bold"> <div class="col-md-2 text-right"> <img class="img-fluid img-thumbnail" style="height:100px" src="/Images/DefaultAvatar.png"> </div> <div class="col-md-8 text-left"> <h3 style="font-size:16px; font-weight:600">' + value.tblUser.FirstName + '</h3> <p style="font-size:14px; font-weight:300"> ' + value.Name + '</p> <p style="font-size:15px; font-weight:500"> <span class="text-primary">    ' + ConvertJsonDateString(value.Createon) + '</span> </p> </div> <div class="col-md-2 text-left" style="margin-top:30px" >    <button class="btn btn-danger" ><i class="fa fa-trash" onclick="commentdelete(' + i + ',' + value.CommentId + ')"></i></button> </div> </div> </li>');
+                                $('#commentSection').prepend(newLi);
+
+
+                            } else {
+                                  var newLi = $('<li class="list-group-item d-flex justify-content-between " id="my' + i + '"> <div class="row font-weight-bold"> <div class="col-md-2 text-right"> <img class="img-fluid img-thumbnail" style="height:100px" src="/Images/DefaultAvatar.png"> </div> <div class="col-md-8 text-left"> <h3 style="font-size:16px; font-weight:600">' + value.tblUser.FirstName + '</h3> <p style="font-size:14px; font-weight:300"> ' + value.Name + '</p> <p style="font-size:15px; font-weight:500"> <span class="text-primary">    ' + ConvertJsonDateString(value.Createon) + '</span> </p> </div> <div class="col-md-2 text-left" style="margin-top:30px" >     </div> </div> </li>');
+                                $('#commentSection').prepend(newLi);
+
+                            }
+                    })
+                    }
+                    })
+        }
+        function ConvertJsonDateString(jsonDate)
+{
+    var shortDate = null;
+
+    if (jsonDate)
+    {
+        var regex = /-?\d+/;
+        var matches = regex.exec(jsonDate);
+        var dt = new Date(parseInt(matches[0]));
+        var month = dt.getMonth() + 1;
+        const monthNames = ["", "January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"
+                           ];
+        var monthString =  monthNames[month];
+        // var monthString = month > 9 ? month: '0' + month;
+        var day = dt.getDate();
+        var dayString = day > 9 ? day : '0' + day;
+        var year = dt.getFullYear();
+        shortDate = monthString + '-' + dayString + '-' + year;
+    }
+    return shortDate;
+};
+
+    </script>
+}

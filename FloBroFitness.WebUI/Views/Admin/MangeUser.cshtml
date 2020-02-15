@@ -1,0 +1,108 @@
+﻿@model List<FBF.Service.DBService.tblUser>
+@using FloBroFitness.WebUI.Helper;
+
+@{
+    ViewBag.Title = "Manage User";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Manage User</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ breadcrumb ] end -->
+<div class="main-body">
+    <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table id="responsive-table" class="table display table dt-responsive nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>User ID</th>
+                                        <th>Email</th>
+                                        <th>Document</th>
+                                        <th>Status</th>
+                                        <th>Register Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.FirstName</td>
+                                                <td>@item.LastName</td>
+                                                <td>@item.UserID</td>
+                                                <td>@item.Email</td>
+                                                <td style="text-align:center"><a href="javascript:;" ><i class="fa fa-file"></i></a></td>
+                                                <td>@*<span class="label theme-bg text-white">*@@item.tblStatu.Status</td>
+                                                <td>@item.CreatedDate</td>
+                                                <td>
+                                                    @if (item.StatusID == Constant.StatusID.Pending)
+                                                    {
+                                                        <a href="javascript:;" onclick="Verification(@item.ID,@Constant.StatusID.Approved)" class="label btn-primary text-white f-12">Approved</a>
+                                                        <a href="javascript:;" onclick="Verification(@item.ID,@Constant.StatusID.Declined)" class="label btn-info text-white f-12">Declined</a>
+
+                                                    }
+                                                    <a href="javascript:;" class="label btn-danger text-white f-12">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+
+<script>
+    $('#responsive-table').DataTable({
+    });
+    function Verification(Id, StatusId) {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax(
+                            {
+                                url: "/Account/Verification",
+                                type: "POST",
+                                data: { ID: Id, StatusId: StatusId },
+                                dataType: "JSON",
+                                success: function (result) {
+                                    swal("", "Record has been delete successfully.", "success");
+                                    location.reload(true);
+                                }
+                            });
+                    }
+        });
+        
+    };
+</script>
+
