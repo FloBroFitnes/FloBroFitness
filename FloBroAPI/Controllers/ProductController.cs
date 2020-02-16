@@ -62,6 +62,7 @@ namespace FloBroAPI.Controllers
             return Ok(response);
         }
 
+
         [HttpPost]
         [Route("api/Product/postproduct")]
         [ResponseType(typeof(string))]
@@ -78,7 +79,7 @@ namespace FloBroAPI.Controllers
             else
             {
                 response.error = true;
-                response.message = "something went wrong";
+                response.message = "something went wrong ";
             }
             var json = new JavaScriptSerializer().Serialize(response);
             return Ok(response);
